@@ -119,15 +119,19 @@ def landing():
     )
 
 
+def _metahub_background(movie):
+    return f"https://images.metahub.space/background/medium/{movie['imdb']}/img"
+
+
 @app.route("/manifest.json")
 def manifest():
     return jsonify({
         "id": "community.hubdemo",
         "version": "1.0.0",
         "name": "Hub Demo Addon",
-        "description": "Demo addon with public test videos, made to validate the Stremio Addon Hub. Relative URLs (/logo.svg) are rewritten by the hub.",
+        "description": "Demo addon with public test videos, made to validate the Stremio Addon Hub. Relative URLs (/logo.svg) are rewritten to absolute by the hub.",
         "logo": "/logo.svg",
-        "background": "/poster/demohub.bigbuckbunny.svg",
+        "background": "/poster/demohub.tearsofsteel.svg",
         "resources": ["catalog", "stream", "meta"],
         "types": ["movie"],
         "catalogs": [{
@@ -163,6 +167,8 @@ def catalog():
                 "releaseInfo": movie["release"],
                 "description": movie["description"],
                 "poster": f"/poster/{movie['id']}.svg",
+                "posterShape": "poster",
+                "background": f"/poster/{movie['id']}.svg",
             }
             for movie in MOVIES
         ]
